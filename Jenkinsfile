@@ -26,7 +26,7 @@ pipeline{
       
       steps {
         echo 'Deploying the application...'
-        withCredentials ([usernamePassword(credentialsId:"CredentialsTest", :"USER", :"PWD")]) {
+        withCredentials ([usernamePassword(credentialsId:"CredentialsTest", usernameVariable:"USER", passwordVariable:"PWD")]) {
           echo "WithCredentials USER: ${USER} PWD: ${PWD}"
         }
       }
