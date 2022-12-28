@@ -1,26 +1,34 @@
 pipeline{
   agent any
   
+  environment {
+    SERVER_CREDENTIALS = credentials('CredentialsTest')
+  }
+  
   stages {
     
     stage ("Build") {
       
       steps {
-          echo 'Building the application...'         
+        echo 'Building the application...'
+        echo "Some credentials ${SERVER_CREDENTIALS}"
       }
     }
     
      stage ("Test") {
       
       steps {
-                   echo 'Testing the application...'
+        echo 'Testing the application...'
       }
     }
     
      stage ("Deploy") {
       
       steps {
-                   echo 'Deploying the application...'
+        echo 'Deploying the application...'
+        withCredentials ([usernamePassword(credentialsId:"CredentialsTest", :"USER", :"PWD")]) {
+          echo "WithCredentials USER: ${USER} PWD: ${PWD}"
+        }
       }
     }
     
@@ -28,7 +36,7 @@ pipeline{
      stage ("Clean") {
       
       steps {
-                   echo 'Cleaning the Jenkins Run...'
+        echo 'Cleaning the Jenkins Run...'
       }
     }
     
